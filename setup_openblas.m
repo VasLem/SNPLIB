@@ -7,10 +7,9 @@ switch os
         clang_library_path = 'C:\ProgramData\Miniconda3\Library\lib';
         openblas_lib = ['LINKLIBS=$LINKLIBS ','/LIBPATH:"',openblas_root,'\lib" ','openblas.lib /LIBPATH:"',clang_library_path,'" flangmain.lib flang.lib flangrti.lib ompstub.lib'];
         cxxoptim= '';
-    case 'GLNXA64'
+    case {'GLNX64', 'GLNXA64'}
         openblas_root = '/usr/lib/x86_64-linux-gnu';
         openblas_include = ['-I"/usr/include/x86_64-linux-gnu/"'];
-        extern_include = ['/home/vaslem/.local/MATLAB/R2021b/extern/include"'];
         openblas_lib = ['LINKLIBS=$LINKLIBS -L"',openblas_root,'/lib" -lopenblas -lgfortran -lmwlapack'];
         cxxoptim = 'CXXOPTIMFLAGS=$CXXOPTIMFLAGS -O3 -std=c++11 -march=native -pipe -fPIC -flto -DUSE_OPENBLAS';
     case 'MACI64'
