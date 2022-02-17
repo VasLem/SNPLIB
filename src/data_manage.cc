@@ -2,8 +2,18 @@
 
 namespace snplib {
 void UnpackGeno(const uint8_t *geno, size_t num_samples, size_t num_snps,
+                uint8_t *geno_d) {
+  const std::array<uint8_t, 4> geno_table{0, 255, 1, 2};
+  SNP snp(geno, num_samples);
+  for (size_t i = 0; i < num_snps; ++i) {
+    auto *snp_geno_d = geno_d + i * num_samples;
+    snp.UnpackGeno(geno_table, snp_geno_d);
+    snp += 1;
+  }
+}
+void UnpackGeno(const uint8_t *geno, size_t num_samples, size_t num_snps,
                 double *geno_d) {
-  const std::array<double, 4> geno_table{0.0, 0.0, 1.0, 2.0};
+  const std::array<double, 4> geno_table{0.0, -1.0, 1.0, 2.0};
   SNP snp(geno, num_samples);
   for (size_t i = 0; i < num_snps; ++i) {
     auto *snp_geno_d = geno_d + i * num_samples;

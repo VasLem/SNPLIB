@@ -7,16 +7,16 @@ switch os
         clang_library_path = 'C:\ProgramData\Miniconda3\Library\lib';
         openblas_lib = ['LINKLIBS=$LINKLIBS ','/LIBPATH:"',openblas_root,'\lib" ','openblas.lib /LIBPATH:"',clang_library_path,'" flangmain.lib flang.lib flangrti.lib ompstub.lib'];
         cxxoptim= '';
-    case 'GLNX64'
-        openblas_root = '/opt/OpenBLAS';
-        openblas_include = ['-I"',openblas_root,'\include\"'];
-        openblas_lib = ['LINKLIBS=$LINKLIBS -L"',openblas_root,'/lib" -lopenblas -lgfortran'];
+    case 'GLNXA64'
+        openblas_root = '/usr/lib/x86_64-linux-gnu';
+        openblas_include = ['-I"/usr/include/x86_64-linux-gnu/"'];
+        extern_include = ['/home/vaslem/.local/MATLAB/R2021b/extern/include"'];
+        openblas_lib = ['LINKLIBS=$LINKLIBS -L"',openblas_root,'/lib" -lopenblas -lgfortran -lmwlapack'];
         cxxoptim = 'CXXOPTIMFLAGS=$CXXOPTIMFLAGS -O3 -std=c++11 -march=native -pipe -fPIC -flto -DUSE_OPENBLAS';
     case 'MACI64'
         openblas_root = '/opt/OpenBLAS';
-        openblas_include = ['-I"',openblas_root,'\include\"'];
         openblas_lib = ['LINKLIBS=$LINKLIBS -L"',openblas_root,'/lib" -lopenblas -lgfortran'];
-        cxxoptim = 'CXXOPTIMFLAGS=$CXXOPTIMFLAGS -O3 -std=c++11 -march=native -pipe -fPIC -flto -DUSE_OPENBLAS';
+        cxxoptim = 'CXXOPTIMFLAGS=$CXXOPTIMFLAGS -O3 -std=c++11  -march=native -pipe -fPIC -flto -DUSE_OPENBLAS';
 end
 mkdir(install_path);
 mex(cxxoptim,'-DUSE_OPENBLAS',openblas_include,openblas_lib,'matlab/mexfiles/CalcAdjustedAF_.cc','src/statistics.cc','src/snp.cc');
@@ -44,7 +44,7 @@ mex(cxxoptim,'matlab/mexfiles/GenerateAdmixedIndividuals_.cc','src/simulations.c
 mex(cxxoptim,'matlab/mexfiles/GenerateIndividuals_.cc','src/simulations.cc');
 mex(cxxoptim,'matlab/mexfiles/GeneratePairwiseSiblings_.cc','src/simulations.cc');
 mex(cxxoptim,'matlab/mexfiles/UpdateAf_.cc','src/simulations.cc');
-mex(cxxoptim,'matlab/mexfiles/UnpackGeno_.cc','src/data_manage.cc','src/snp.cc');
+mex(cxxoptim,'matlab/mexfiles/UnpackGeno_.cc','src/data_manage.cc','src/snp.cc', '-R2018a');
 mex(cxxoptim,'matlab/mexfiles/UnpackGRMGeno_.cc','src/data_manage.cc','src/snp.cc');
 mex(cxxoptim,'matlab/mexfiles/UnpackUGeno_.cc','src/data_manage.cc','src/snp.cc');
 mex(cxxoptim,'matlab/mexfiles/FlipGeno_.cc','src/data_manage.cc','src/snp.cc');
