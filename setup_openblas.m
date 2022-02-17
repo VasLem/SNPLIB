@@ -1,5 +1,5 @@
 os = computer();
-install_path = [userpath,'/SNPLIB'];
+install_path = ['../SNPLIB'];
 switch os
     case 'PCWIN64'
         openblas_root = 'C:\opt';
@@ -50,5 +50,4 @@ mex(cxxoptim,'matlab/mexfiles/FlipGeno_.cc','src/data_manage.cc','src/snp.cc');
 mex(cxxoptim,'matlab/mexfiles/Keep_.cc','src/data_manage.cc','src/snp.cc');
 copyfile('matlab/@SNPLIB/*.m',[install_path,'/@SNPLIB']);
 movefile(['*.',mexext],[install_path,'/mexfiles']);
-cd(install_path);
 clear all;

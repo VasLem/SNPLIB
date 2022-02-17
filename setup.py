@@ -73,7 +73,7 @@ class CMakeBuild(build_ext):
             if pf == "Windows":
                 openblas_default_root = 'C:/opt'
             if pf == "Linux":
-                openblas_default_root = '/opt/OpenBLAS'
+                openblas_default_root = '/usr/lib/x86_64-linux-gnu'
             if pf == 'Darwin':
                 openblas_default_root = '/opt/OpenBLAS'
             openblas_root = input(
@@ -101,6 +101,9 @@ class CMakeBuild(build_ext):
         env = os.environ.copy()
         env['CXXFLAGS'] = '{} -DVERSION_INFO=\\"{}\\"'.format(env.get('CXXFLAGS', ''),
                                                               self.distribution.get_version())
+        print(env)
+        print(' '.join(['cmake', ext.sourcedir] +
+                              cmake_args))
         if not os.path.exists(self.build_temp):
             os.makedirs(self.build_temp)
         subprocess.check_call(['cmake', ext.sourcedir] +

@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.12)
 project(_SNPLIB CXX)
 set(CMAKE_CXX_STANDARD 14)
 
+include_directories(/usr/local/MATLAB/R2021b/extern/include/)
+
 add_subdirectory(pybind11)
 
 if(USE_MKL)
